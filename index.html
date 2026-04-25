@@ -34,11 +34,9 @@
         
         /* רשת הדשבורד */
         .dashboard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 30px; }
-        
         .card { background: var(--card-bg); border-radius: 16px; padding: 24px; border: 1px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
         .card-title { color: var(--text-muted); font-size: 16px; margin-bottom: 15px; font-weight: 600; }
         .card-value { font-size: 36px; font-weight: 800; color: var(--text-main); }
-        
         .trend { display: inline-block; margin-top: 10px; font-size: 14px; font-weight: 600; padding: 4px 8px; border-radius: 20px; }
         .trend.up { background: #d1fae5; color: var(--success); }
         .trend.down { background: #fee2e2; color: var(--danger); }
@@ -57,18 +55,39 @@
         th, td { text-align: right; padding: 15px; border-bottom: 1px solid var(--border); }
         th { color: var(--text-muted); font-weight: 600; }
         .amount.income { color: var(--success); font-weight: bold; }
-        .amount.expense { color: var(--danger); font-weight: bold; }
+        .amount.expense { color: var(--text-main); font-weight: bold; }
         .ai-tag { background: #eef2ff; color: var(--primary); padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; }
 
-        /* חלון קופץ (Modal) */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 1000; }
-        .modal { background: white; width: 400px; border-radius: 16px; padding: 30px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); position: relative; }
-        .close-btn { position: absolute; top: 20px; left: 20px; background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-muted); }
-        .modal h2 { margin-top: 0; color: var(--primary); }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; color: var(--text-muted); font-weight: 600; font-size: 14px; }
-        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; font-family: inherit; }
-        .btn-submit { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        /* --- עיצוב חלון החשבונית החדש --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(17, 24, 39, 0.7); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(4px); }
+        
+        .receipt-modal { background: #ffffff; width: 420px; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); position: relative; overflow: hidden; }
+        
+        .receipt-header { background: #f8fafc; padding: 25px 25px 15px 25px; border-bottom: 2px dashed #cbd5e1; text-align: center; }
+        .close-btn { position: absolute; top: 15px; left: 15px; background: none; border: none; font-size: 22px; cursor: pointer; color: #94a3b8; transition: 0.2s; }
+        .close-btn:hover { color: var(--danger); }
+        
+        /* טאבים בסגנון הסרטון */
+        .tabs { display: flex; background: #e2e8f0; border-radius: 10px; padding: 5px; margin-bottom: 10px; }
+        .tab { flex: 1; text-align: center; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold; color: #64748b; transition: 0.3s; }
+        .tab.active.expense { background: #ffffff; color: var(--danger); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .tab.active.income { background: #ffffff; color: var(--success); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+
+        .receipt-body { padding: 25px; }
+        
+        /* שדה סכום ענק */
+        .amount-input-wrapper { text-align: center; margin-bottom: 25px; position: relative; }
+        .amount-input-wrapper span { position: absolute; right: 20px; top: 10px; font-size: 28px; color: var(--text-muted); font-weight: bold; }
+        .amount-input-wrapper input { width: 100%; font-size: 45px; font-weight: 800; text-align: center; border: none; border-bottom: 2px solid #e2e8f0; padding-bottom: 5px; color: var(--text-main); outline: none; background: transparent; }
+        .amount-input-wrapper input:focus { border-bottom-color: var(--primary); }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; color: var(--text-muted); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-group input { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; font-family: inherit; font-size: 15px; background: #f8fafc; outline: none; transition: 0.2s; }
+        .form-group input:focus { border-color: var(--primary); background: #ffffff; }
+        
+        .btn-submit { width: 100%; padding: 15px; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.2s; color: white; }
+        /* צבע הכפתור ישתנה לפי הטאב בעזרת JS */
     </style>
 </head>
 <body>
@@ -80,7 +99,6 @@
             <a href="#" class="nav-item">💸 תזרים ועובר ושב</a>
             <a href="#" class="nav-item">🎯 יעדים ותקציב</a>
             <a href="#" class="nav-item">🤖 יועץ פיננסי AI</a>
-            <a href="#" class="nav-item">⚙️ הגדרות מערכת</a>
         </div>
     </div>
 
@@ -99,7 +117,7 @@
                 <div class="ai-insights">
                     <div class="ai-text">
                         <h3>✨ תובנת AI שבועית</h3>
-                        <p>זיהיתי חריגה של 15% בהוצאות על "מסעדות וקפה" ביחס לממוצע שלך בחצי השנה האחרונה. האם תרצה שאגדיר התראת תקציב אוטומטית לקטגוריה זו?</p>
+                        <p>זיהיתי חריגה של 15% בהוצאות על "מסעדות וקפה". האם תרצה שאגדיר התראת תקציב אוטומטית לקטגוריה זו?</p>
                     </div>
                     <button style="background: white; color: var(--primary); border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer;">הגדר התראה</button>
                 </div>
@@ -113,13 +131,11 @@
                 <div class="card">
                     <div class="card-title">הכנסות החודש</div>
                     <div class="card-value" id="totalIncome" style="color: var(--success);">₪21,000</div>
-                    <div class="trend up">בהתאם ליעד</div>
                 </div>
 
                 <div class="card">
                     <div class="card-title">הוצאות החודש</div>
                     <div class="card-value" id="totalExpense">₪6,750</div>
-                    <div class="trend down">₪850- פחות מהממוצע</div>
                 </div>
 
                 <div class="card transactions">
@@ -134,34 +150,13 @@
                             </tr>
                         </thead>
                         <tbody id="transactionsTable">
-                            <tr>
-                                <td>25/04/2026</td>
-                                <td>שופרסל דיל - סניף מרכז</td>
-                                <td><span class="ai-tag">🛒 סופר ומזון</span></td>
-                                <td class="amount expense">₪450.00-</td>
-                            </tr>
-                            <tr>
-                                <td>24/04/2026</td>
-                                <td>חברת חשמל לישראל</td>
-                                <td><span class="ai-tag">⚡ חשבונות קבועים</span></td>
-                                <td class="amount expense">₪320.00-</td>
-                            </tr>
-                            <tr>
-                                <td>23/04/2026</td>
-                                <td>העברה ממשכורת - הייטק בע"מ</td>
-                                <td><span class="ai-tag">💰 הכנסה קבועה</span></td>
-                                <td class="amount income">₪18,500.00+</td>
-                            </tr>
-                        </tbody>
+                            </tbody>
                     </table>
                 </div>
-
+                
                 <div class="card" style="text-align: center;">
-                    <div class="card-title">ציון בריאות פיננסית (AI Score)</div>
-                    <div style="width: 150px; height: 150px; border-radius: 50%; border: 15px solid var(--success); margin: 20px auto; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: 900;">
-                        88
-                    </div>
-                    <p style="color: var(--text-muted); font-size: 14px;">הציון שלך מצוין! יחס ההכנסות-הוצאות שלך נמצא באחוזון ה-90.</p>
+                    <div class="card-title">ציון בריאות פיננסית</div>
+                    <div style="width: 150px; height: 150px; border-radius: 50%; border: 15px solid var(--success); margin: 20px auto; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: 900;">88</div>
                 </div>
 
             </div>
@@ -169,26 +164,32 @@
     </div>
 
     <div class="modal-overlay" id="addModal">
-        <div class="modal">
-            <button class="close-btn" id="closeModalBtn">✖</button>
-            <h2>הוספת תנועה חדשה</h2>
-            <form id="transactionForm">
-                <div class="form-group">
-                    <label>סוג התנועה</label>
-                    <select id="tType">
-                        <option value="expense">הוצאה (-)</option>
-                        <option value="income">הכנסה (+)</option>
-                    </select>
+        <div class="receipt-modal">
+            <div class="receipt-header">
+                <button class="close-btn" id="closeModalBtn">✖</button>
+                <div class="tabs">
+                    <div class="tab active expense" id="tabExpense" onclick="setTransactionType('expense')">הוצאה</div>
+                    <div class="tab" id="tabIncome" onclick="setTransactionType('income')">הכנסה</div>
                 </div>
-                <div class="form-group">
-                    <label>סכום (₪)</label>
-                    <input type="number" id="tAmount" required min="1">
+            </div>
+            
+            <form id="transactionForm" class="receipt-body">
+                <div class="amount-input-wrapper">
+                    <span>₪</span>
+                    <input type="number" id="tAmount" placeholder="0" required min="1">
                 </div>
+                
                 <div class="form-group">
-                    <label>תיאור בית העסק (ה-AI יקטלג לבד)</label>
-                    <input type="text" id="tDesc" placeholder="לדוגמה: דלק פז, רמי לוי..." required>
+                    <label>תאריך ביצוע</label>
+                    <input type="date" id="tDate" required>
                 </div>
-                <button type="submit" class="btn-submit">שמור תנועה</button>
+
+                <div class="form-group">
+                    <label>למי שילמת? (ה-AI יקטלג לבד)</label>
+                    <input type="text" id="tDesc" placeholder="לדוגמה: רמי לוי, פז, חברת חשמל..." required>
+                </div>
+                
+                <button type="submit" class="btn-submit" id="submitBtn" style="background: var(--danger);">הוסף הוצאה</button>
             </form>
         </div>
     </div>
@@ -198,37 +199,63 @@
         const openBtn = document.getElementById('openModalBtn');
         const closeBtn = document.getElementById('closeModalBtn');
         const form = document.getElementById('transactionForm');
+        const dateInput = document.getElementById('tDate');
+        const submitBtn = document.getElementById('submitBtn');
         
-        // נתוני פתיחה
+        let currentType = 'expense'; // ברירת מחדל: הוצאה
+        
         let currentBalance = 14250;
         let currentIncome = 21000;
         let currentExpense = 6750;
 
+        // הגדרת תאריך של היום אוטומטית בשדה התאריך
+        dateInput.valueAsDate = new Date();
+
         openBtn.onclick = () => modal.style.display = 'flex';
         closeBtn.onclick = () => modal.style.display = 'none';
 
-        // מנוע קיטלוג AI (מדומה)
+        // פונקציה להחלפת הטאבים (הכנסה / הוצאה)
+        function setTransactionType(type) {
+            currentType = type;
+            const tabExpense = document.getElementById('tabExpense');
+            const tabIncome = document.getElementById('tabIncome');
+            
+            if (type === 'expense') {
+                tabExpense.classList.add('active', 'expense');
+                tabIncome.classList.remove('active', 'income');
+                submitBtn.style.background = 'var(--danger)';
+                submitBtn.innerText = 'הוסף הוצאה';
+            } else {
+                tabIncome.classList.add('active', 'income');
+                tabExpense.classList.remove('active', 'expense');
+                submitBtn.style.background = 'var(--success)';
+                submitBtn.innerText = 'הוסף הכנסה';
+            }
+        }
+
+        // מנוע קיטלוג AI
         function smartCategorize(desc) {
             const text = desc.toLowerCase();
             if (text.includes('שופרסל') || text.includes('רמי לוי') || text.includes('מזון') || text.includes('מכולת')) return '🛒 סופר ומזון';
             if (text.includes('דלק') || text.includes('פז') || text.includes('סונול') || text.includes('מוסך')) return '🚗 רכב ותחבורה';
-            if (text.includes('חשמל') || text.includes('ארנונה') || text.includes('מים') || text.includes('אינטרנט')) return '⚡ חשבונות קבועים';
-            if (text.includes('מסעדה') || text.includes('קפה') || text.includes('וולט') || text.includes('תן ביס')) return '🍔 מסעדות ובילויים';
-            if (text.includes('משכורת') || text.includes('הכנסה') || text.includes('העברה מ')) return '💰 הכנסה';
+            if (text.includes('חשמל') || text.includes('ארנונה') || text.includes('מים')) return '⚡ חשבונות קבועים';
+            if (text.includes('מסעדה') || text.includes('קפה') || text.includes('וולט')) return '🍔 מסעדות ובילויים';
+            if (text.includes('משכורת') || text.includes('הכנסה') || text.includes('ביטוח לאומי')) return '💰 הכנסה';
             return '📦 כללי';
         }
 
         form.onsubmit = (e) => {
             e.preventDefault();
             
-            const type = document.getElementById('tType').value;
             const amount = parseFloat(document.getElementById('tAmount').value);
             const desc = document.getElementById('tDesc').value;
             const category = smartCategorize(desc);
-            const today = new Date().toLocaleDateString('he-IL');
+            
+            // עיצוב התאריך שנבחר מהשדה לתצוגה יפה
+            const dateVal = new Date(dateInput.value);
+            const dateStr = dateVal.toLocaleDateString('he-IL');
 
-            // עדכון המספרים בכרטיסיות למעלה
-            if (type === 'income') {
+            if (currentType === 'income') {
                 currentBalance += amount;
                 currentIncome += amount;
             } else {
@@ -240,14 +267,13 @@
             document.getElementById('totalIncome').innerText = '₪' + currentIncome.toLocaleString();
             document.getElementById('totalExpense').innerText = '₪' + currentExpense.toLocaleString();
 
-            // הוספה לטבלה
             const tbody = document.getElementById('transactionsTable');
             const row = document.createElement('tr');
-            const amountClass = type === 'income' ? 'income' : 'expense';
-            const sign = type === 'income' ? '+' : '-';
+            const amountClass = currentType === 'income' ? 'income' : 'expense';
+            const sign = currentType === 'income' ? '+' : '-';
 
             row.innerHTML = `
-                <td>${today}</td>
+                <td>${dateStr}</td>
                 <td>${desc}</td>
                 <td><span class="ai-tag">${category}</span></td>
                 <td class="amount ${amountClass}">₪${amount.toLocaleString()}${sign}</td>
@@ -256,6 +282,7 @@
             tbody.insertBefore(row, tbody.firstChild);
 
             form.reset();
+            dateInput.valueAsDate = new Date(); // מאפס חזרה לתאריך של היום
             modal.style.display = 'none';
         };
     </script>
