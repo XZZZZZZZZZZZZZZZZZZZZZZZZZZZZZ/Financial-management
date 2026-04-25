@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartFin AI - ניהול פיננסי חכם</title>
+    <style>
+        :root {
+            --primary: #4f46e5; /* כחול-סגול הייטקיסטי של AI */
+            --primary-hover: #4338ca;
+            --bg-color: #f3f4f6;
+            --sidebar-bg: #ffffff;
+            --card-bg: #ffffff;
+            --text-main: #111827;
+            --text-muted: #6b7280;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --border: #e5e7eb;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* תפריט צד כמו בסרטון */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            border-left: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.05);
+            z-index: 10;
+        }
+
+        .logo-area {
+            padding: 20px;
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--primary);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-menu {
+            padding: 20px 0;
+            flex: 1;
+        }
+
+        .nav-item {
+            padding: 15px 25px;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: #eef2ff;
+            color: var(--primary);
+            border-left: 4px solid var(--primary);
+        }
+
+        /* תוכן מרכזי */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .top-header {
+            background: var(--card-bg);
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .content-area {
+            padding: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* רשת הדשבורד */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            border: 1px solid var(--border);
+        }
+
+        .card-title {
+            color: var(--text-muted);
+            font-size: 16px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .card-value {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .trend {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 20px;
+        }
+        .trend.up { background: #d1fae5; color: var(--success); }
+        .trend.down { background: #fee2e2; color: var(--danger); }
+
+        /* אזור AI מיוחד */
+        .ai-insights {
+            grid-column: span 3;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 10px 15px rgba(79, 70, 229, 0.2);
+        }
+
+        .ai-text h3 {
+            margin: 0 0 10px 0;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .ai-text p {
+            margin: 0;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .btn-add {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 6px rgba(79, 70, 229, 0.3);
+        }
+        .btn-add:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        /* טבלת עסקאות */
+        .transactions {
+            grid-column: span 2;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        th, td {
+            text-align: right;
+            padding: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .amount.income { color: var(--success); font-weight: bold; }
+        .amount.expense { color: var(--text-main); font-weight: bold; }
+        
+        .ai-tag {
+            background: #eef2ff;
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="logo-area">
+            ✨ SmartFin AI
+        </div>
+        <div class="nav-menu">
+            <a href="#" class="nav-item active">📊 תמונת מצב (דשבורד)</a>
+            <a href="#" class="nav-item">💸 תזרים ועובר ושב</a>
+            <a href="#" class="nav-item">🎯 יעדים ותקציב</a>
+            <a href="#" class="nav-item">🤖 יועץ פיננסי AI</a>
+            <a href="#" class="nav-item">⚙️ הגדרות מערכת</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="top-header">
+            <div>
+                <h2 style="margin:0;">בוקר טוב, משפחת ישראלי</h2>
+                <span style="color: var(--text-muted);">אפריל 2026</span>
+            </div>
+            <button class="btn-add">+ הוסף תנועה חדשה</button>
+        </div>
+
+        <div class="content-area">
+            
+            <div class="dashboard-grid">
+                <div class="ai-insights">
+                    <div class="ai-text">
+                        <h3>✨ תובנת AI שבועית</h3>
+                        <p>זיהיתי חריגה של 15% בהוצאות על "מסעדות וקפה" ביחס לממוצע שלך בחצי השנה האחרונה. האם תרצה שאגדיר התראת תקציב אוטומטית לקטגוריה זו?</p>
+                    </div>
+                    <button style="background: white; color: var(--primary); border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer;">הגדר התראה</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">יתרה נוכחית (עו"ש)</div>
+                    <div class="card-value">₪14,250</div>
+                    <div class="trend up">₪3,100+ מהחודש שעבר</div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">הכנסות החודש</div>
+                    <div class="card-value" style="color: var(--success);">₪21,000</div>
+                    <div class="trend up">בהתאם ליעד</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">הוצאות החודש</div>
+                    <div class="card-value">₪6,750</div>
+                    <div class="trend down">₪850- פחות מהממוצע</div>
+                </div>
+
+                <div class="card transactions">
+                    <div class="card-title">תנועות אחרונות שקוטלגו ע"י AI</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>תאריך</th>
+                                <th>תיאור התנועה</th>
+                                <th>קטגוריה (AI)</th>
+                                <th>סכום</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>25/04/2026</td>
+                                <td>שופרסל דיל - סניף מרכז</td>
+                                <td><span class="ai-tag">🛒 סופר ומזון</span></td>
+                                <td class="amount expense">₪450.00-</td>
+                            </tr>
+                            <tr>
+                                <td>24/04/2026</td>
+                                <td>חברת חשמל לישראל</td>
+                                <td><span class="ai-tag">⚡ חשבונות קבועים</span></td>
+                                <td class="amount expense">₪320.00-</td>
+                            </tr>
+                            <tr>
+                                <td>23/04/2026</td>
+                                <td>העברה ממשכורת - הייטק בע"מ</td>
+                                <td><span class="ai-tag">💰 הכנסה קבועה</span></td>
+                                <td class="amount income">₪18,500.00+</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card" style="text-align: center;">
+                    <div class="card-title">ציון בריאות פיננסית (AI Score)</div>
+                    <div style="width: 150px; height: 150px; border-radius: 50%; border: 15px solid var(--success); margin: 20px auto; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: 900;">
+                        88
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 14px;">הציון שלך מצוין! יחס ההכנסות-הוצאות שלך נמצא באחוזון ה-90.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
