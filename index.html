@@ -20,28 +20,21 @@
 
         body { margin: 0; font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--bg-color); color: var(--text-main); display: flex; height: 100vh; overflow: hidden; }
         
-        /* תפריט צד */
         .sidebar { width: 260px; background-color: var(--sidebar-bg); border-left: 1px solid var(--border); display: flex; flex-direction: column; z-index: 10; box-shadow: -2px 0 10px rgba(0,0,0,0.05); }
         .logo-area { padding: 20px; font-size: 24px; font-weight: 900; color: var(--primary); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
         .nav-menu { padding: 20px 0; flex: 1; }
         .nav-item { padding: 15px 25px; color: var(--text-muted); text-decoration: none; display: block; font-weight: 600; transition: 0.2s; }
         .nav-item:hover, .nav-item.active { background-color: #eef2ff; color: var(--primary); border-left: 4px solid var(--primary); }
 
-        /* תוכן מרכזי */
         .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
         .top-header { background: var(--card-bg); padding: 20px 40px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
         .content-area { padding: 40px; max-width: 1400px; margin: 0 auto; width: 100%; box-sizing: border-box; }
         
-        /* רשת הדשבורד */
         .dashboard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 30px; }
         .card { background: var(--card-bg); border-radius: 16px; padding: 24px; border: 1px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
         .card-title { color: var(--text-muted); font-size: 16px; margin-bottom: 15px; font-weight: 600; }
-        .card-value { font-size: 36px; font-weight: 800; color: var(--text-main); }
-        .trend { display: inline-block; margin-top: 10px; font-size: 14px; font-weight: 600; padding: 4px 8px; border-radius: 20px; }
-        .trend.up { background: #d1fae5; color: var(--success); }
-        .trend.down { background: #fee2e2; color: var(--danger); }
-
-        /* אזור AI */
+        .card-value { font-size: 36px; font-weight: 800; color: var(--text-main); transition: 0.3s; }
+        
         .ai-insights { grid-column: span 3; background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; border-radius: 16px; padding: 24px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 10px 15px rgba(79, 70, 229, 0.2); }
         .ai-text h3 { margin: 0 0 10px 0; font-size: 20px; display: flex; align-items: center; gap: 10px; }
         .ai-text p { margin: 0; font-size: 16px; opacity: 0.9; }
@@ -49,7 +42,6 @@
         .btn-add { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 6px rgba(79, 70, 229, 0.3); }
         .btn-add:hover { background: var(--primary-hover); transform: translateY(-2px); }
 
-        /* טבלה */
         .transactions { grid-column: span 2; }
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         th, td { text-align: right; padding: 15px; border-bottom: 1px solid var(--border); }
@@ -58,36 +50,29 @@
         .amount.expense { color: var(--text-main); font-weight: bold; }
         .ai-tag { background: #eef2ff; color: var(--primary); padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; }
 
-        /* --- עיצוב חלון החשבונית החדש --- */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(17, 24, 39, 0.7); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(4px); }
-        
         .receipt-modal { background: #ffffff; width: 420px; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); position: relative; overflow: hidden; }
-        
         .receipt-header { background: #f8fafc; padding: 25px 25px 15px 25px; border-bottom: 2px dashed #cbd5e1; text-align: center; }
         .close-btn { position: absolute; top: 15px; left: 15px; background: none; border: none; font-size: 22px; cursor: pointer; color: #94a3b8; transition: 0.2s; }
         .close-btn:hover { color: var(--danger); }
         
-        /* טאבים בסגנון הסרטון */
         .tabs { display: flex; background: #e2e8f0; border-radius: 10px; padding: 5px; margin-bottom: 10px; }
         .tab { flex: 1; text-align: center; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold; color: #64748b; transition: 0.3s; }
         .tab.active.expense { background: #ffffff; color: var(--danger); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .tab.active.income { background: #ffffff; color: var(--success); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
 
         .receipt-body { padding: 25px; }
-        
-        /* שדה סכום ענק */
         .amount-input-wrapper { text-align: center; margin-bottom: 25px; position: relative; }
         .amount-input-wrapper span { position: absolute; right: 20px; top: 10px; font-size: 28px; color: var(--text-muted); font-weight: bold; }
         .amount-input-wrapper input { width: 100%; font-size: 45px; font-weight: 800; text-align: center; border: none; border-bottom: 2px solid #e2e8f0; padding-bottom: 5px; color: var(--text-main); outline: none; background: transparent; }
         .amount-input-wrapper input:focus { border-bottom-color: var(--primary); }
 
         .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 8px; color: var(--text-muted); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .form-group input { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; font-family: inherit; font-size: 15px; background: #f8fafc; outline: none; transition: 0.2s; }
+        .form-group label { display: block; margin-bottom: 8px; color: var(--text-muted); font-weight: 600; font-size: 13px; text-transform: uppercase; }
+        .form-group input { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; font-family: inherit; font-size: 15px; background: #f8fafc; outline: none; }
         .form-group input:focus { border-color: var(--primary); background: #ffffff; }
         
         .btn-submit { width: 100%; padding: 15px; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.2s; color: white; }
-        /* צבע הכפתור ישתנה לפי הטאב בעזרת JS */
     </style>
 </head>
 <body>
@@ -105,8 +90,8 @@
     <div class="main-content">
         <div class="top-header">
             <div>
-                <h2 style="margin:0;">בוקר טוב, משפחת ישראלי</h2>
-                <span style="color: var(--text-muted);">אפריל 2026</span>
+                <h2 style="margin:0;">בוקר טוב, משתמש יקר</h2>
+                <span style="color: var(--text-muted);">מערכת חיה ומחוברת</span>
             </div>
             <button class="btn-add" id="openModalBtn">+ הוסף תנועה חדשה</button>
         </div>
@@ -117,29 +102,27 @@
                 <div class="ai-insights">
                     <div class="ai-text">
                         <h3>✨ תובנת AI שבועית</h3>
-                        <p>זיהיתי חריגה של 15% בהוצאות על "מסעדות וקפה". האם תרצה שאגדיר התראת תקציב אוטומטית לקטגוריה זו?</p>
+                        <p>זיהיתי שהמערכת שלך מחוברת עכשיו בהצלחה למסד הנתונים בענן. כל תנועה שתוסיף תישמר לצמיתות!</p>
                     </div>
-                    <button style="background: white; color: var(--primary); border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer;">הגדר התראה</button>
                 </div>
 
                 <div class="card">
                     <div class="card-title">יתרה נוכחית (עו"ש)</div>
-                    <div class="card-value" id="totalBalance">₪14,250</div>
-                    <div class="trend up">₪3,100+ מהחודש שעבר</div>
+                    <div class="card-value" id="totalBalance">₪0</div>
                 </div>
                 
                 <div class="card">
-                    <div class="card-title">הכנסות החודש</div>
-                    <div class="card-value" id="totalIncome" style="color: var(--success);">₪21,000</div>
+                    <div class="card-title">סה"כ הכנסות</div>
+                    <div class="card-value" id="totalIncome" style="color: var(--success);">₪0</div>
                 </div>
 
                 <div class="card">
-                    <div class="card-title">הוצאות החודש</div>
-                    <div class="card-value" id="totalExpense">₪6,750</div>
+                    <div class="card-title">סה"כ הוצאות</div>
+                    <div class="card-value" id="totalExpense">₪0</div>
                 </div>
 
                 <div class="card transactions">
-                    <div class="card-title">תנועות אחרונות שקוטלגו ע"י AI</div>
+                    <div class="card-title">תנועות שקוטלגו ע"י AI (ישירות מהשרת)</div>
                     <table>
                         <thead>
                             <tr>
@@ -150,13 +133,14 @@
                             </tr>
                         </thead>
                         <tbody id="transactionsTable">
-                            </tbody>
+                            <tr><td colspan="4" style="text-align: center;">טוען נתונים מהכספת...</td></tr>
+                        </tbody>
                     </table>
                 </div>
                 
                 <div class="card" style="text-align: center;">
                     <div class="card-title">ציון בריאות פיננסית</div>
-                    <div style="width: 150px; height: 150px; border-radius: 50%; border: 15px solid var(--success); margin: 20px auto; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: 900;">88</div>
+                    <div style="width: 150px; height: 150px; border-radius: 50%; border: 15px solid var(--success); margin: 20px auto; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: 900;">100</div>
                 </div>
 
             </div>
@@ -189,7 +173,7 @@
                     <input type="text" id="tDesc" placeholder="לדוגמה: רמי לוי, פז, חברת חשמל..." required>
                 </div>
                 
-                <button type="submit" class="btn-submit" id="submitBtn" style="background: var(--danger);">הוסף הוצאה</button>
+                <button type="submit" class="btn-submit" id="submitBtn" style="background: var(--danger);">שמור בכספת</button>
             </form>
         </div>
     </div>
@@ -202,89 +186,117 @@
         const dateInput = document.getElementById('tDate');
         const submitBtn = document.getElementById('submitBtn');
         
-        let currentType = 'expense'; // ברירת מחדל: הוצאה
-        
-        let currentBalance = 14250;
-        let currentIncome = 21000;
-        let currentExpense = 6750;
-
-        // הגדרת תאריך של היום אוטומטית בשדה התאריך
+        let currentType = 'expense';
         dateInput.valueAsDate = new Date();
 
         openBtn.onclick = () => modal.style.display = 'flex';
         closeBtn.onclick = () => modal.style.display = 'none';
 
-        // פונקציה להחלפת הטאבים (הכנסה / הוצאה)
         function setTransactionType(type) {
             currentType = type;
-            const tabExpense = document.getElementById('tabExpense');
-            const tabIncome = document.getElementById('tabIncome');
+            document.getElementById('tabExpense').classList.toggle('active', type === 'expense');
+            document.getElementById('tabExpense').classList.toggle('expense', type === 'expense');
+            document.getElementById('tabIncome').classList.toggle('active', type === 'income');
+            document.getElementById('tabIncome').classList.toggle('income', type === 'income');
             
-            if (type === 'expense') {
-                tabExpense.classList.add('active', 'expense');
-                tabIncome.classList.remove('active', 'income');
-                submitBtn.style.background = 'var(--danger)';
-                submitBtn.innerText = 'הוסף הוצאה';
-            } else {
-                tabIncome.classList.add('active', 'income');
-                tabExpense.classList.remove('active', 'expense');
-                submitBtn.style.background = 'var(--success)';
-                submitBtn.innerText = 'הוסף הכנסה';
-            }
+            submitBtn.style.background = type === 'expense' ? 'var(--danger)' : 'var(--success)';
+            submitBtn.innerText = type === 'expense' ? 'שמור הוצאה' : 'שמור הכנסה';
         }
 
-        // מנוע קיטלוג AI
         function smartCategorize(desc) {
             const text = desc.toLowerCase();
-            if (text.includes('שופרסל') || text.includes('רמי לוי') || text.includes('מזון') || text.includes('מכולת')) return '🛒 סופר ומזון';
-            if (text.includes('דלק') || text.includes('פז') || text.includes('סונול') || text.includes('מוסך')) return '🚗 רכב ותחבורה';
+            if (text.includes('שופרסל') || text.includes('רמי לוי') || text.includes('מזון')) return '🛒 סופר ומזון';
+            if (text.includes('דלק') || text.includes('פז') || text.includes('מוסך')) return '🚗 רכב ותחבורה';
             if (text.includes('חשמל') || text.includes('ארנונה') || text.includes('מים')) return '⚡ חשבונות קבועים';
             if (text.includes('מסעדה') || text.includes('קפה') || text.includes('וולט')) return '🍔 מסעדות ובילויים';
             if (text.includes('משכורת') || text.includes('הכנסה') || text.includes('ביטוח לאומי')) return '💰 הכנסה';
             return '📦 כללי';
         }
 
-        form.onsubmit = (e) => {
+        // פונקציה שמושכת את הנתונים מהשרת
+        async function loadTransactions() {
+            try {
+                const res = await fetch('/api/transactions');
+                const data = await res.json();
+                
+                let totalIncome = 0;
+                let totalExpense = 0;
+                const tbody = document.getElementById('transactionsTable');
+                tbody.innerHTML = '';
+                
+                if (!data || data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #8b949e;">אין עדיין תנועות בכספת.</td></tr>';
+                } else {
+                    data.forEach(t => {
+                        const isIncome = t.type === 'income';
+                        const amountClass = isIncome ? 'income' : 'expense';
+                        const sign = isIncome ? '+' : '-';
+                        
+                        if(isIncome) totalIncome += t.amount;
+                        else totalExpense += t.amount;
+                        
+                        tbody.innerHTML += `
+                            <tr>
+                                <td>${t.date}</td>
+                                <td>${t.description}</td>
+                                <td><span class="ai-tag">${t.category}</span></td>
+                                <td class="amount ${amountClass}">₪${t.amount.toLocaleString()}${sign}</td>
+                            </tr>
+                        `;
+                    });
+                }
+                
+                document.getElementById('totalIncome').innerText = '₪' + totalIncome.toLocaleString();
+                document.getElementById('totalExpense').innerText = '₪' + totalExpense.toLocaleString();
+                document.getElementById('totalBalance').innerText = '₪' + (totalIncome - totalExpense).toLocaleString();
+                
+            } catch (e) {
+                document.getElementById('transactionsTable').innerHTML = '<tr><td colspan="4" style="color:red; text-align:center;">שגיאת תקשורת עם השרת</td></tr>';
+            }
+        }
+
+        // שליחת נתונים חדשים לשרת
+        form.onsubmit = async (e) => {
             e.preventDefault();
+            submitBtn.innerText = 'טוען...';
             
             const amount = parseFloat(document.getElementById('tAmount').value);
             const desc = document.getElementById('tDesc').value;
             const category = smartCategorize(desc);
-            
-            // עיצוב התאריך שנבחר מהשדה לתצוגה יפה
             const dateVal = new Date(dateInput.value);
-            const dateStr = dateVal.toLocaleDateString('he-IL');
+            
+            const newTransaction = {
+                type: currentType,
+                amount: amount,
+                description: desc,
+                category: category,
+                date: dateVal.toLocaleDateString('he-IL')
+            };
 
-            if (currentType === 'income') {
-                currentBalance += amount;
-                currentIncome += amount;
-            } else {
-                currentBalance -= amount;
-                currentExpense += amount;
+            try {
+                const res = await fetch('/api/transactions', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newTransaction)
+                });
+                
+                if (res.ok) {
+                    form.reset();
+                    dateInput.valueAsDate = new Date();
+                    modal.style.display = 'none';
+                    loadTransactions(); // טוען מחדש את הטבלה והמספרים
+                } else {
+                    alert('שגיאה בשמירת הנתונים.');
+                }
+            } catch (err) {
+                alert('שגיאת רשת.');
             }
             
-            document.getElementById('totalBalance').innerText = '₪' + currentBalance.toLocaleString();
-            document.getElementById('totalIncome').innerText = '₪' + currentIncome.toLocaleString();
-            document.getElementById('totalExpense').innerText = '₪' + currentExpense.toLocaleString();
-
-            const tbody = document.getElementById('transactionsTable');
-            const row = document.createElement('tr');
-            const amountClass = currentType === 'income' ? 'income' : 'expense';
-            const sign = currentType === 'income' ? '+' : '-';
-
-            row.innerHTML = `
-                <td>${dateStr}</td>
-                <td>${desc}</td>
-                <td><span class="ai-tag">${category}</span></td>
-                <td class="amount ${amountClass}">₪${amount.toLocaleString()}${sign}</td>
-            `;
-            
-            tbody.insertBefore(row, tbody.firstChild);
-
-            form.reset();
-            dateInput.valueAsDate = new Date(); // מאפס חזרה לתאריך של היום
-            modal.style.display = 'none';
+            submitBtn.innerText = currentType === 'expense' ? 'שמור הוצאה' : 'שמור הכנסה';
         };
+
+        // הפעלה ראשונית
+        loadTransactions();
     </script>
 </body>
 </html>
